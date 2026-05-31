@@ -1,0 +1,1730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DLVASolutions</title>
+  <link rel="icon" type="image/png" href="logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --black: #000000;
+      --black-soft: #0a0a0a;
+      --black-card: #111111;
+      --black-elevated: #181818;
+      --black-border: #222222;
+      --gray-dark: #333333;
+      --gray-mid: #666666;
+      --gray-light: #999999;
+      --gray-text: #b0b0b0;
+      --white: #ffffff;
+      --white-off: #f0f0f0;
+      --white-muted: #cccccc;
+      --accent: #ffffff;
+      --radius: 14px;
+      --radius-sm: 10px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      color: var(--gray-text);
+      line-height: 1.7;
+      background: var(--black);
+    }
+
+    ::selection { background: rgba(255,255,255,0.15); color: var(--white); }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      transition: all 0.3s;
+    }
+    nav.scrolled { background: rgba(0,0,0,0.9); }
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--white);
+      text-decoration: none;
+      letter-spacing: 1px;
+    }
+    .nav-logo img {
+      height: 40px;
+      width: 40px;
+      object-fit: contain;
+      border-radius: 10px;
+      mix-blend-mode: lighten;
+    }
+    .nav-logo span { opacity: 0.5; font-weight: 500; }
+    .nav-links { display: flex; gap: 0.15rem; align-items: center; }
+    .nav-links a {
+      color: var(--gray-light);
+      text-decoration: none;
+      font-size: 0.825rem;
+      font-weight: 500;
+      padding: 0.5rem 0.9rem;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover { color: var(--white); background: rgba(255,255,255,0.06); }
+    .nav-cta {
+      background: var(--white) !important;
+      color: var(--black) !important;
+      font-weight: 600 !important;
+      padding: 0.5rem 1.25rem !important;
+    }
+    .nav-cta:hover { opacity: 0.9 !important; }
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      cursor: pointer; padding: 4px; background: none; border: none;
+    }
+    .hamburger span { display: block; width: 22px; height: 1.5px; background: var(--white); border-radius: 2px; transition: all 0.3s; }
+
+    /* ── SHARED ── */
+    .section { padding: 7rem 2rem; }
+    .section-bordered { border-top: 1px solid var(--black-border); }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .section-label {
+      text-transform: uppercase;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      color: var(--gray-light);
+      margin-bottom: 1rem;
+    }
+    .section-title {
+      font-size: 2.75rem;
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1.15;
+      margin-bottom: 1.25rem;
+      letter-spacing: -0.5px;
+    }
+    .section-subtitle {
+      font-size: 1.1rem;
+      color: var(--gray-light);
+      max-width: 620px;
+      line-height: 1.8;
+    }
+    .section-header { margin-bottom: 3.5rem; }
+    .section-header-center { text-align: center; }
+    .section-header-center .section-subtitle { margin: 0 auto; }
+
+    /* ── BUTTONS ── */
+    .btn {
+      display: inline-block;
+      padding: 0.9rem 2.25rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border-radius: 50px;
+      text-decoration: none;
+      transition: all 0.3s;
+      cursor: pointer;
+      border: none;
+      font-family: inherit;
+      letter-spacing: 0.2px;
+    }
+    .btn-white { background: var(--white); color: var(--black); }
+    .btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(255,255,255,0.15); }
+    .btn-outline {
+      background: transparent; color: var(--white);
+      border: 1.5px solid rgba(255,255,255,0.25);
+    }
+    .btn-outline:hover { border-color: var(--white); background: rgba(255,255,255,0.05); }
+    .btn-ghost {
+      background: rgba(255,255,255,0.06); color: var(--white);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .btn-ghost:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); }
+    .btn-group { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 2.5rem; }
+
+    /* ── CARDS ── */
+    .card {
+      background: var(--black-card);
+      border: 1px solid var(--black-border);
+      border-radius: var(--radius);
+      padding: 2.25rem;
+      transition: all 0.3s;
+    }
+    .card:hover { border-color: var(--gray-dark); transform: translateY(-3px); }
+    .card h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 0.75rem;
+    }
+    .card p { color: var(--gray-text); font-size: 0.95rem; line-height: 1.75; }
+    .card-icon {
+      width: 50px; height: 50px;
+      border-radius: var(--radius-sm);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1.5rem;
+      font-size: 1.4rem;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+
+    /* ── IMAGE CARDS ── */
+    .img-card {
+      border-radius: var(--radius);
+      overflow: hidden;
+      position: relative;
+    }
+    .img-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .img-card-overlay {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 2rem;
+      background: linear-gradient(transparent, rgba(0,0,0,0.85));
+    }
+    .img-card-overlay h3 { color: var(--white); font-size: 1.2rem; font-weight: 700; margin-bottom: 0.25rem; }
+    .img-card-overlay p { color: var(--white-muted); font-size: 0.9rem; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding: 8rem 2rem 6rem;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    .hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.25;
+      filter: grayscale(100%);
+    }
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.95) 100%);
+    }
+    .hero .container { position: relative; z-index: 1; }
+    .hero-tag {
+      display: inline-block;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: var(--gray-light);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 0.5rem 1.5rem;
+      border-radius: 50px;
+      margin-bottom: 2rem;
+    }
+    .hero h1 {
+      font-size: 4.5rem;
+      font-weight: 900;
+      line-height: 1.05;
+      color: var(--white);
+      margin-bottom: 1.75rem;
+      max-width: 700px;
+      letter-spacing: -1.5px;
+    }
+    .hero h1 .thin { font-weight: 300; opacity: 0.7; }
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--gray-light);
+      max-width: 540px;
+      line-height: 1.8;
+      margin-bottom: 0.5rem;
+    }
+
+    /* ── PHOTO ROW ── */
+    .photo-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    .photo-row img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      border-radius: var(--radius);
+      filter: grayscale(30%);
+      transition: all 0.4s;
+      border: 1px solid var(--black-border);
+    }
+    .photo-row img:hover { filter: grayscale(0%); transform: scale(1.02); }
+
+    /* ── SPLIT SECTION ── */
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    .split-img {
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--black-border);
+    }
+    .split-img img {
+      width: 100%;
+      height: 500px;
+      object-fit: cover;
+      display: block;
+      filter: grayscale(20%);
+      transition: filter 0.4s;
+    }
+    .split-img:hover img { filter: grayscale(0%); }
+    .split-text h3 { font-size: 1.25rem; font-weight: 700; color: var(--white); margin-bottom: 0.75rem; margin-top: 2rem; }
+    .split-text h3:first-child { margin-top: 0; }
+    .split-text p { color: var(--gray-text); margin-bottom: 1rem; font-size: 0.95rem; }
+
+    /* ── PATHWAY ── */
+    .pathway { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; position: relative; }
+    .pathway-step {
+      text-align: center;
+      padding: 3rem 2rem;
+      position: relative;
+      border: 1px solid var(--black-border);
+      border-radius: var(--radius);
+      background: var(--black-card);
+    }
+    .pathway-step:hover { background: var(--black-elevated); }
+    .pathway-num {
+      width: 60px; height: 60px;
+      border-radius: 50%;
+      background: var(--white);
+      color: var(--black);
+      font-size: 1.25rem;
+      font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1.5rem;
+    }
+    .pathway-step h3 { font-size: 1.35rem; font-weight: 800; color: var(--white); margin-bottom: 0.75rem; }
+    .pathway-step p { color: var(--gray-text); font-size: 0.95rem; }
+
+    /* ── PROCESS STEPS ── */
+    .process-step {
+      display: grid;
+      grid-template-columns: 60px 1fr;
+      gap: 1.5rem;
+      align-items: start;
+      margin-bottom: 2.25rem;
+    }
+    .process-step:last-child { margin-bottom: 0; }
+    .step-num {
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--white);
+      font-size: 0.85rem;
+      font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .process-step h4 { font-size: 1.05rem; font-weight: 700; color: var(--white); margin-bottom: 0.35rem; }
+    .process-step p { color: var(--gray-text); font-size: 0.95rem; }
+
+    /* ── CHECK LIST ── */
+    .check-list { list-style: none; padding: 0; }
+    .check-list li {
+      padding: 0.6rem 0 0.6rem 2rem;
+      position: relative;
+      color: var(--gray-text);
+      font-size: 0.95rem;
+    }
+    .check-list li::before {
+      content: '\2713';
+      position: absolute;
+      left: 0;
+      color: var(--white);
+      font-weight: 700;
+    }
+
+    /* ── SERVICE LIST ── */
+    .service-list { list-style: none; padding: 0; }
+    .service-list li {
+      padding: 0.5rem 0 0.5rem 1.5rem;
+      position: relative;
+      color: var(--gray-text);
+      font-size: 0.95rem;
+    }
+    .service-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 1rem;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--gray-mid);
+    }
+
+    /* ── SERVICE BLOCKS ── */
+    .service-block {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+      padding: 3rem 0;
+      border-bottom: 1px solid var(--black-border);
+    }
+    .service-block:last-child { border-bottom: none; padding-bottom: 0; }
+    .service-block:first-child { padding-top: 0; }
+    .service-block h3 { font-size: 1.35rem; font-weight: 700; color: var(--white); margin-bottom: 1rem; }
+    .service-block p { color: var(--gray-text); margin-bottom: 1rem; font-size: 0.95rem; }
+
+    /* ── BLOCKQUOTE ── */
+    blockquote {
+      border-left: 2px solid var(--white);
+      padding: 1.25rem 1.75rem;
+      background: rgba(255,255,255,0.03);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      font-style: italic;
+      color: var(--white-muted);
+      margin: 1.5rem 0;
+      font-size: 1.05rem;
+    }
+
+    /* ── FIT GRID ── */
+    .fit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .fit-box { padding: 2.25rem; border-radius: var(--radius); }
+    .fit-box.good { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); }
+    .fit-box.not { background: var(--black-card); border: 1px solid var(--black-border); }
+    .fit-box h4 { font-size: 1rem; font-weight: 700; margin-bottom: 1.25rem; }
+    .fit-box.good h4 { color: var(--white); }
+    .fit-box.not h4 { color: var(--gray-light); }
+    .fit-box li { color: var(--gray-text); font-size: 0.95rem; margin-bottom: 0.5rem; }
+    .x-list { list-style: none; padding: 0; }
+    .x-list li {
+      padding: 0.5rem 0 0.5rem 2rem;
+      position: relative;
+      color: var(--gray-text);
+      font-size: 0.95rem;
+    }
+    .x-list li::before {
+      content: '\2715';
+      position: absolute;
+      left: 0;
+      color: var(--gray-mid);
+      font-size: 0.85rem;
+    }
+
+    /* ── FAQ ── */
+    .faq-item { border-bottom: 1px solid var(--black-border); padding: 1.75rem 0; }
+    .faq-item:last-child { border-bottom: none; }
+    .faq-question {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--white);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      background: none; border: none;
+      width: 100%;
+      text-align: left;
+      padding: 0;
+      font-family: inherit;
+      line-height: 1.5;
+    }
+    .faq-question:hover { opacity: 0.8; }
+    .faq-icon {
+      flex-shrink: 0;
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      color: var(--gray-light);
+      transition: all 0.3s;
+    }
+    .faq-item.open .faq-icon { background: var(--white); color: var(--black); transform: rotate(45deg); }
+    .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
+    .faq-item.open .faq-answer { max-height: 300px; }
+    .faq-answer p { padding-top: 1.25rem; color: var(--gray-text); font-size: 0.95rem; line-height: 1.8; }
+
+    /* ── STATEMENT ── */
+    .statement-card {
+      background: var(--black-card);
+      border: 1px solid var(--black-border);
+      border-radius: var(--radius);
+      padding: 3.5rem;
+    }
+    .statement-card h3 {
+      font-size: 0.8rem; font-weight: 700; color: var(--gray-light);
+      text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1.25rem;
+    }
+    .statement-card p { color: var(--white-muted); font-size: 1.05rem; line-height: 1.9; }
+
+    /* ── CTA BANNER ── */
+    .cta-banner {
+      text-align: center;
+      padding: 7rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-banner-bg {
+      position: absolute;
+      inset: 0;
+    }
+    .cta-banner-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.15;
+      filter: grayscale(100%);
+    }
+    .cta-banner-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.8));
+    }
+    .cta-banner .container { position: relative; z-index: 1; }
+    .cta-banner h2 { font-size: 2.75rem; font-weight: 800; color: var(--white); margin-bottom: 1rem; letter-spacing: -0.5px; }
+    .cta-banner p { font-size: 1.1rem; color: var(--gray-light); max-width: 500px; margin: 0 auto 2.5rem; }
+
+    /* ── FOUNDER ── */
+    .founder-section {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 2rem;
+      align-items: center;
+      padding: 2.5rem;
+      background: var(--black-card);
+      border: 1px solid var(--black-border);
+      border-radius: var(--radius);
+    }
+    .founder-avatar {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .founder-avatar img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+    .founder-section h3 { font-size: 1.1rem; font-weight: 700; color: var(--white); margin-bottom: 0.15rem; }
+    .founder-section .role { font-size: 0.8rem; color: var(--gray-light); font-weight: 500; margin-bottom: 0.65rem; letter-spacing: 0.5px; }
+    .founder-section p { font-size: 0.95rem; color: var(--gray-text); }
+
+    /* ── ABOUT SIDEBAR ── */
+    .about-sidebar .card { margin-bottom: 1.5rem; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--black-border);
+      padding: 3rem 2rem;
+      color: var(--gray-mid);
+      font-size: 0.85rem;
+    }
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-brand {
+      font-weight: 800;
+      color: var(--white);
+      font-size: 1rem;
+      letter-spacing: 1px;
+    }
+    .footer-brand span { opacity: 0.4; font-weight: 400; }
+    .footer-links { display: flex; gap: 2rem; }
+    .footer-links a { color: var(--gray-mid); text-decoration: none; font-size: 0.85rem; }
+    .footer-links a:hover { color: var(--white); }
+
+    /* ── PHOTO FEATURE GRID ── */
+    .feature-photos {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    .feature-photo {
+      position: relative;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--black-border);
+      height: 320px;
+    }
+    .feature-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(30%);
+      transition: all 0.5s;
+    }
+    .feature-photo:hover img { filter: grayscale(0%); transform: scale(1.03); }
+    .feature-photo-overlay {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 1.75rem;
+      background: linear-gradient(transparent, rgba(0,0,0,0.9));
+    }
+    .feature-photo-overlay h4 { color: var(--white); font-size: 1rem; font-weight: 700; }
+    .feature-photo-overlay p { color: var(--white-muted); font-size: 0.85rem; margin-top: 0.25rem; }
+
+    /* ── VALUE GRID ── */
+    .value-card { text-align: center; padding: 2.5rem 1.5rem; }
+    .value-card .card-icon {
+      margin: 0 auto 1.25rem;
+      width: 54px; height: 54px;
+      border-radius: 50%;
+    }
+
+    /* ── FORM ── */
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+    }
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+    .form-group label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--white-muted);
+      margin-bottom: 0.5rem;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      background: var(--black-card);
+      border: 1px solid var(--black-border);
+      border-radius: var(--radius-sm);
+      color: var(--white);
+      font-size: 0.95rem;
+      font-family: inherit;
+      transition: border-color 0.2s;
+      outline: none;
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: var(--gray-mid);
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: rgba(255,255,255,0.35);
+    }
+    .form-group select {
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23999' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      padding-right: 2.5rem;
+      cursor: pointer;
+    }
+    .form-group select option {
+      background: var(--black-card);
+      color: var(--white);
+    }
+    .form-group textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+    .checkbox-label {
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+      cursor: pointer;
+      font-size: 0.85rem !important;
+      color: var(--gray-text) !important;
+      line-height: 1.6;
+    }
+    .checkbox-label input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      margin-top: 3px;
+      flex-shrink: 0;
+      accent-color: var(--white);
+      cursor: pointer;
+    }
+    .form-success {
+      color: #4ade80;
+      font-weight: 600;
+      font-size: 1.05rem;
+    }
+    .form-error {
+      color: #f87171;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none !important;
+      box-shadow: none !important;
+    }
+
+    /* ── MODAL ── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      background: rgba(0,0,0,0.8);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      overflow-y: auto;
+    }
+    .modal-overlay.open {
+      display: flex;
+    }
+    .modal-content {
+      background: var(--black-soft);
+      border: 1px solid var(--black-border);
+      border-radius: var(--radius);
+      width: 100%;
+      max-width: 720px;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 3rem;
+      position: relative;
+      animation: modalIn 0.3s ease;
+    }
+    @keyframes modalIn {
+      from { opacity: 0; transform: translateY(20px) scale(0.97); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .modal-close {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.25rem;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--gray-light);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+    .modal-close:hover {
+      background: rgba(255,255,255,0.12);
+      color: var(--white);
+    }
+    .modal-header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+    .modal-header .section-label { margin-bottom: 0.75rem; }
+    .modal-header .section-title { font-size: 2rem; margin-bottom: 0.75rem; }
+    .modal-header p { color: var(--gray-light); font-size: 0.95rem; }
+
+    /* ── MOBILE ── */
+    @media (max-width: 1024px) {
+      .grid-3 { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 72px; left: 0; right: 0;
+        background: rgba(0,0,0,0.95);
+        backdrop-filter: blur(20px);
+        flex-direction: column;
+        padding: 1rem 2rem 2rem;
+        border-bottom: 1px solid var(--black-border);
+      }
+      .nav-links.open { display: flex; }
+      .hamburger { display: flex; }
+      .hero h1 { font-size: 2.75rem; }
+      .hero { padding: 7rem 1.5rem 4rem; min-height: auto; }
+      .section { padding: 4.5rem 1.5rem; }
+      .section-title { font-size: 2rem; }
+      .grid-2, .grid-3, .split,
+      .service-block, .fit-grid,
+      .pathway, .feature-photos,
+      .photo-row, .form-grid { grid-template-columns: 1fr; }
+      .photo-row img { height: 220px; }
+      .feature-photo { height: 260px; }
+      .split-img img { height: 300px; }
+      .btn-group { flex-direction: column; }
+      .btn-group .btn { text-align: center; }
+      .footer-inner { flex-direction: column; text-align: center; }
+      .footer-links { justify-content: center; flex-wrap: wrap; }
+      .founder-section { grid-template-columns: 1fr; text-align: center; }
+      .founder-avatar { margin: 0 auto; }
+      .modal-overlay { padding: 1rem; }
+      .modal-content { padding: 2rem 1.5rem; max-height: 95vh; }
+      .modal-header .section-title { font-size: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="#home" class="nav-logo"><img src="logo.png" alt="DLVASolutions Logo"> DLVASOLUTIONS</a>
+    <button class="hamburger" id="menuToggle" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links" id="navLinks">
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+
+      <a href="#vas">For VAs</a>
+      <a href="#chatters">For Chatters</a>
+      <a href="#faq">FAQ</a>
+      <a href="#" onclick="openModal(); return false;" class="nav-cta">Get Started</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════ HERO ═══════ -->
+<section class="hero" id="home">
+  <div class="hero-bg">
+    <img src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=1600&q=80" alt="">
+  </div>
+  <div class="container">
+    <div class="hero-tag">Donn Leif VA Solutions</div>
+    <h1>Learn. Get Skilled.<br><span class="thin">Get Hired.</span></h1>
+    <p>We train motivated beginners to become AI-capable Virtual Assistants and professional agency chatters, then connect them with the digital businesses that need them.</p>
+    <p>No prior experience required. Just commitment, discipline, and the willingness to learn.</p>
+    <div class="btn-group">
+      <a href="#vas" class="btn btn-white">Become a VA</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ PHOTO ROW ═══════ -->
+<section style="padding: 0 2rem 0;">
+  <div class="container">
+    <div class="photo-row">
+      <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?w=600&q=80" alt="Team working together on laptops">
+      <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=600&q=80" alt="Team collaborating remotely">
+      <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&q=80" alt="People working together with technology">
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ WHO WE HELP ═══════ -->
+<section class="section section-bordered" id="who">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">Who We Serve</div>
+      <h2 class="section-title">Three groups. One standard.</h2>
+      <p class="section-subtitle">Not everyone entering the digital workforce knows where to start. That is exactly who we serve.</p>
+    </div>
+    <div class="grid-3">
+      <div class="card">
+        <div class="card-icon">&#128218;</div>
+        <h3>For Aspiring Virtual Assistants</h3>
+        <p>If you are a beginner ready to build real, employable skills in AI tools, communication, and digital business support, we train you, evaluate you, and prepare you for placement.</p>
+        <div style="margin-top:1.5rem"><a href="#vas" class="btn btn-ghost" style="padding:0.6rem 1.5rem; font-size:0.85rem;">Learn More</a></div>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#128172;</div>
+        <h3>For Aspiring Agency Chatters</h3>
+        <p>If you want to work as a professional chatter for OnlyFans and content creator agencies, we train you in fan engagement, chat management, sales conversion, and strict confidentiality standards.</p>
+        <div style="margin-top:1.5rem"><a href="#chatters" class="btn btn-ghost" style="padding:0.6rem 1.5rem; font-size:0.85rem;">Learn More</a></div>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#127970;</div>
+        <h3>For Agencies & Digital Businesses</h3>
+        <p>If you need reliable, trained support staff who understand AI workflows, chat management, professional communication, and confidentiality, we provide pre-vetted, job-ready professionals.</p>
+        <div style="margin-top:1.5rem"><a href="#" onclick="openModal(); return false;" class="btn btn-ghost" style="padding:0.6rem 1.5rem; font-size:0.85rem;">Get in Touch</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ PATHWAY ═══════ -->
+<section class="section section-bordered">
+  <div class="container">
+    <div class="section-header section-header-center">
+      <div class="section-label">The Process</div>
+      <h2 class="section-title">A clear path from training to employment</h2>
+    </div>
+    <div class="pathway">
+      <div class="pathway-step">
+        <div class="pathway-num">1</div>
+        <h3>Learn</h3>
+        <p>Gain practical knowledge in AI tools, professional communication, digital customer support, chat management, and automation fundamentals.</p>
+      </div>
+      <div class="pathway-step">
+        <div class="pathway-num">2</div>
+        <h3>Get Skilled</h3>
+        <p>Apply what you learn through structured training modules, real-world scenarios, and performance evaluations held to professional standards.</p>
+      </div>
+      <div class="pathway-step">
+        <div class="pathway-num">3</div>
+        <h3>Get Hired</h3>
+        <p>Qualified graduates are matched with agencies, online entrepreneurs, and digital businesses looking for trained, dependable virtual support and professional chatters.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ WHY US ═══════ -->
+<section class="section section-bordered">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">Why DLVASolutions</div>
+      <h2 class="section-title">What sets us apart</h2>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-icon">&#128736;</div>
+        <h3>Built by a Practitioner</h3>
+        <p>Founded by an AI Systems Builder and Automation Specialist who works directly with digital businesses. The training reflects what businesses actually need.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#128203;</div>
+        <h3>Structured From Day One</h3>
+        <p>This is not a collection of tutorials. It is a complete training-to-placement pipeline designed with clear standards, professional expectations, and a defined outcome.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#127919;</div>
+        <h3>Focused on Beginners</h3>
+        <p>We specialize in taking people from zero to job-ready. That singular focus is what allows us to do it well. Beginners are the priority, not an afterthought.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#9881;</div>
+        <h3>Grounded in Real-World Application</h3>
+        <p>Every skill we teach ties directly to what digital businesses actually need. Our training is built around practical implementation, not academic exercises.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ FEATURE PHOTOS ═══════ -->
+<section class="section section-bordered">
+  <div class="container">
+    <div class="feature-photos">
+      <div class="feature-photo">
+        <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=800&q=80" alt="Person working on laptop with AI tools">
+        <div class="feature-photo-overlay">
+          <h4>AI-Powered Skills</h4>
+          <p>Trained in Claude, ChatGPT, and modern automation tools</p>
+        </div>
+      </div>
+      <div class="feature-photo">
+        <img src="https://images.unsplash.com/photo-1611606063065-ee7946f0787a?w=800&q=80" alt="Person chatting on phone and laptop">
+        <div class="feature-photo-overlay">
+          <h4>Agency Chat Management</h4>
+          <p>Trained chatters for OnlyFans and creator agencies</p>
+        </div>
+      </div>
+      <div class="feature-photo">
+        <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?w=800&q=80" alt="Team meeting digitally">
+        <div class="feature-photo-overlay">
+          <h4>Digital Business Support</h4>
+          <p>Supporting entrepreneurs and creators worldwide</p>
+        </div>
+      </div>
+      <div class="feature-photo">
+        <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=800&q=80" alt="Modern collaborative workspace">
+        <div class="feature-photo-overlay">
+          <h4>Placement & Growth</h4>
+          <p>Connected with businesses that need skilled support</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ FOUNDER ═══════ -->
+<section class="section section-bordered">
+  <div class="container">
+    <div class="founder-section">
+      <div class="founder-avatar"><img src="donn-leif.jpg" alt="Donn Leif"></div>
+      <div>
+        <h3>Donn Leif</h3>
+        <div class="role">AI Systems Builder / Automation Specialist / VA & Chatter Training Expert / Founder, DLVASolutions</div>
+        <p>Donn specializes in AI-powered workflows, agency chat operations, VA management, communication systems, and digital business automation. Over the years, numerous individuals, agencies, and digital businesses have worked directly with him for AI guidance, chatter training, workflow design, and remote systems support. DLVASolutions was built on that foundation.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ ABOUT ═══════ -->
+<section class="section section-bordered" id="about">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">About</div>
+      <h2 class="section-title">About DLVASolutions</h2>
+    </div>
+    <div class="split">
+      <div class="split-text">
+        <p>DLVASolutions (Donn Leif VA Solutions) is a training and placement company for Virtual Assistants and agency chatters. We serve one clear purpose: to help motivated beginners enter the digital workforce through structured training, professional development, and direct job placement.</p>
+
+        <p>We exist because the gap between opportunity and access is growing. AI tools are transforming how digital businesses operate, but most people entering the workforce have no structured way to learn these tools and turn that knowledge into employment. DLVASolutions closes that gap.</p>
+
+        <p>We do not sell courses. We do not make promises without process. We train individuals to a professional standard, evaluate their readiness, and connect them with the businesses that need their skills.</p>
+
+        <h3>The Founder</h3>
+        <p>Donn Leif is an AI Systems Builder, Automation Specialist, and VA/Chatter Training Expert with extensive hands-on experience across the digital business landscape. His specializations include:</p>
+        <ul class="check-list" style="margin:1rem 0;">
+          <li>AI tools and implementation (Claude, ChatGPT, automation platforms)</li>
+          <li>Building AI-powered workflows for digital businesses</li>
+          <li>Agency chat operations and chatter management</li>
+          <li>OnlyFans agency systems, fan engagement, and sales workflows</li>
+          <li>VA training, placement, and remote team management</li>
+          <li>Communication systems and digital business infrastructure</li>
+          <li>Low-code / no-code AI implementation</li>
+        </ul>
+
+        <blockquote>"I built DLVASolutions because I saw too many capable people locked out of the digital economy, not because they lacked potential, but because they lacked direction. This company exists to solve that."</blockquote>
+      </div>
+      <div class="split-img">
+        <img src="donn-leif.jpg" alt="Donn Leif, Founder of DLVASolutions" style="filter:none;">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ MISSION + VISION ═══════ -->
+<section class="section section-bordered">
+  <div class="container">
+    <div class="grid-2">
+      <div class="about-sidebar">
+        <div class="card">
+          <h3>Our Mission</h3>
+          <p>To equip motivated beginners with the practical skills, professional standards, and structured support they need to become reliable, job-ready Virtual Assistants and agency chatters, and to connect them with the businesses that benefit from their work.</p>
+        </div>
+      </div>
+      <div class="about-sidebar">
+        <div class="card">
+          <h3>Our Vision</h3>
+          <p>To become the standard for Virtual Assistant and agency chatter development and placement, known for producing professionals who are trained, vetted, and trusted by the businesses and agencies they serve.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ VALUES ═══════ -->
+<section class="section section-bordered">
+  <div class="container">
+    <div class="section-header section-header-center">
+      <div class="section-label">Our Principles</div>
+      <h2 class="section-title">Core Values</h2>
+    </div>
+    <div class="grid-3">
+      <div class="card value-card">
+        <div class="card-icon">&#9878;</div>
+        <h3>Integrity</h3>
+        <p>Honesty and transparency at every level. Our commitments are backed by clear processes and consistent follow-through.</p>
+      </div>
+      <div class="card value-card">
+        <div class="card-icon">&#128170;</div>
+        <h3>Discipline</h3>
+        <p>High standards produce high-quality professionals. Discipline in training translates to discipline in performance.</p>
+      </div>
+      <div class="card value-card">
+        <div class="card-icon">&#128161;</div>
+        <h3>Innovation</h3>
+        <p>We stay current with AI tools and digital business practices so our training remains relevant and our graduates remain competitive.</p>
+      </div>
+      <div class="card value-card">
+        <div class="card-icon">&#128274;</div>
+        <h3>Discretion</h3>
+        <p>Confidentiality is non-negotiable. Every VA is trained to handle sensitive information with care and professionalism.</p>
+      </div>
+      <div class="card value-card">
+        <div class="card-icon">&#128200;</div>
+        <h3>Growth</h3>
+        <p>Committed to the continuous development of our trainees, our processes, and our organization.</p>
+      </div>
+      <div class="card value-card">
+        <div class="card-icon">&#127942;</div>
+        <h3>Performance</h3>
+        <p>Results matter. We measure success by the job-readiness and professional output of every individual we train.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ SERVICES ═══════ -->
+<section class="section section-bordered" id="services">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">Services</div>
+      <h2 class="section-title">What We Do</h2>
+      <p class="section-subtitle">End-to-end training and placement services for aspiring Virtual Assistants and agency chatters entering the digital workforce.</p>
+    </div>
+
+    <div class="service-block">
+      <div>
+        <h3>Beginner AI VA Training Program</h3>
+        <p>Our flagship program, designed specifically for individuals with little to no experience in AI tools or virtual assistance.</p>
+        <p>This is not a self-paced video library. It is a structured training program with standards, expectations, and accountability.</p>
+      </div>
+      <div>
+        <ul class="service-list">
+          <li>Foundational use of Claude, ChatGPT, and supporting automation tools</li>
+          <li>Professional application of AI tools to real business tasks</li>
+          <li>Structured modules with clear learning objectives</li>
+          <li>Hands-on exercises mirroring actual VA responsibilities</li>
+          <li>Performance evaluations at key checkpoints</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="service-block">
+      <div>
+        <h3>AI Systems & Automation Training</h3>
+        <p>Understanding AI tools is only part of the equation. Our trainees learn how those tools fit into larger business systems.</p>
+      </div>
+      <div>
+        <ul class="service-list">
+          <li>How digital businesses use AI-powered workflows</li>
+          <li>Introduction to automation tools and low-code/no-code platforms</li>
+          <li>Task management, scheduling, and workflow coordination</li>
+          <li>Supporting business owners who rely on automated systems</li>
+          <li>Practical AI application in content, data, and admin tasks</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="service-block">
+      <div>
+        <h3>Agency Chatter Training Program</h3>
+        <p>A dedicated track for individuals who want to work as professional chatters for OnlyFans agencies and content creator management companies.</p>
+        <p>Chat management is a real skill. We train it like one.</p>
+      </div>
+      <div>
+        <ul class="service-list">
+          <li>Fan engagement techniques and conversation management</li>
+          <li>Sales conversion and upselling through natural dialogue</li>
+          <li>Tone matching and persona consistency</li>
+          <li>Platform-specific best practices and compliance</li>
+          <li>Confidentiality, discretion, and professional boundaries</li>
+          <li>AI-assisted chat workflows for speed and quality</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="service-block">
+      <div>
+        <h3>Communication & Digital Support Skills</h3>
+        <p>Technical skills without professional communication lead to short-lived placements. We address that directly.</p>
+      </div>
+      <div>
+        <ul class="service-list">
+          <li>Professional written and verbal communication for remote work</li>
+          <li>Online customer support best practices</li>
+          <li>Email management, messaging etiquette, and response standards</li>
+          <li>Creator and digital business assistance</li>
+          <li>Confidentiality practices and ethical work standards</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="service-block">
+      <div>
+        <h3>VA Placement & Matching</h3>
+        <p>Training without employment is incomplete. Our process includes direct placement support for qualified graduates.</p>
+        <p>Placement is earned, not guaranteed. Only individuals who meet our performance and professionalism standards are put forward.</p>
+      </div>
+      <div>
+        <ul class="service-list">
+          <li>Qualified graduates enter our placement pipeline</li>
+          <li>Matching based on skills, strengths, and business or agency needs</li>
+          <li>VA and chatter candidates trained, tested, and vetted through our program</li>
+          <li>Professional standards maintained throughout placement</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ FOR ASPIRING VAs ═══════ -->
+<section class="section section-bordered" id="vas">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">For Aspiring VAs</div>
+      <h2 class="section-title">Start Your Career as an AI-Capable Virtual Assistant</h2>
+      <p class="section-subtitle">You do not need a tech background. You do not need years of experience. You need commitment, discipline, and a structured path forward.</p>
+    </div>
+
+    <!-- Hero Image -->
+    <div style="border-radius:var(--radius); overflow:hidden; border:1px solid var(--black-border); margin-bottom:3.5rem; height:360px;">
+      <img src="https://images.unsplash.com/photo-1515378960530-7c0da6231fb1?w=1200&q=80" alt="Person learning on laptop" style="width:100%; height:100%; object-fit:cover; filter:grayscale(20%);">
+    </div>
+
+    <!-- Fit / Not Fit -->
+    <div class="fit-grid" style="margin-bottom:3.5rem;">
+      <div class="fit-box good">
+        <h4>You are a good fit if you:</h4>
+        <ul class="check-list">
+          <li>Have little to no experience with AI tools and want to change that</li>
+          <li>Are looking to enter the digital workforce but do not know where to start</li>
+          <li>Want a structured training process, not random online content</li>
+          <li>Are willing to meet professional standards, not just complete lessons</li>
+          <li>Want real skills that lead to real employment</li>
+        </ul>
+      </div>
+      <div class="fit-box not">
+        <h4>This is not for you if you:</h4>
+        <ul class="x-list">
+          <li>Are looking for a shortcut or get-rich-quick path</li>
+          <li>Are unwilling to meet deadlines, follow structure, or accept feedback</li>
+          <li>Expect placement without earning it through performance</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- What You'll Learn -->
+    <h3 style="font-size:1.3rem; font-weight:700; color:var(--white); margin-bottom:1.75rem;">What You Will Learn</h3>
+    <div class="grid-3" style="margin-bottom:3.5rem;">
+      <div class="card">
+        <div class="card-icon">&#129302;</div>
+        <h3>AI Tools & Application</h3>
+        <p>Hands-on training in Claude, ChatGPT, and supporting automation tools. Learn to use AI professionally to complete real tasks.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#128172;</div>
+        <h3>Professional Communication</h3>
+        <p>Clear, effective written and verbal communication for remote work. Email management, messaging etiquette, and response standards.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#128187;</div>
+        <h3>Digital Business Support</h3>
+        <p>How to assist online entrepreneurs, content creators, and digital business owners with task management and workflow coordination.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#127897;</div>
+        <h3>Online Customer Support</h3>
+        <p>Best practices for handling customer interactions with professionalism, accuracy, and care.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#9881;</div>
+        <h3>Automation Fundamentals</h3>
+        <p>How digital businesses use automation, and how you fit into those systems as a capable support professional.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#128737;</div>
+        <h3>Ethics & Professionalism</h3>
+        <p>How to handle sensitive information, maintain discretion, meet performance expectations, and operate with integrity.</p>
+      </div>
+    </div>
+
+    <!-- Growth Pathway -->
+    <h3 style="font-size:1.3rem; font-weight:700; color:var(--white); margin-bottom:1.75rem;">Your Growth Pathway</h3>
+    <div style="max-width:650px; margin-bottom:3.5rem;">
+      <div class="process-step">
+        <div class="step-num">01</div>
+        <div>
+          <h4>Apply & Enter Training</h4>
+          <p>Submit your application. If accepted, begin our structured training program covering AI tools, communication, and digital business support.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">02</div>
+        <div>
+          <h4>Learn & Build Skills</h4>
+          <p>Progress through training modules designed around practical application. Every lesson connects to real tasks you will perform as a working VA.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">03</div>
+        <div>
+          <h4>Get Evaluated</h4>
+          <p>At defined checkpoints, your skills and professionalism are assessed. These evaluations determine your readiness for the next stage.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">04</div>
+        <div>
+          <h4>Qualify for Placement</h4>
+          <p>Meet our standards and enter the placement pipeline, matched with businesses looking for trained, reliable virtual support.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">05</div>
+        <div>
+          <h4>Get Hired & Keep Growing</h4>
+          <p>Begin working with a real business. Every role is an opportunity to build your reputation and expand your capabilities.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- What Makes This Different -->
+    <div class="grid-2">
+      <div class="card">
+        <h3>This is not a course. It is a career pathway.</h3>
+        <p>Most online courses sell you content and leave you on your own. DLVASolutions trains you, evaluates you, and directly connects you with employment. The training exists to produce one outcome: a job-ready professional.</p>
+      </div>
+      <div class="card">
+        <h3>Beginners are the focus, not an afterthought.</h3>
+        <p>We do not cater to advanced professionals. Every module, every exercise, and every evaluation is designed for people starting from the ground up. That singular focus is what makes it work.</p>
+      </div>
+    </div>
+
+    <div style="margin-top:3rem; text-align:center;">
+      <a href="#" onclick="openModal(); return false;" class="btn btn-white">Apply to the Training Program</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ FOR AGENCY CHATTERS ═══════ -->
+<section class="section section-bordered" id="chatters">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">For Agency Chatters</div>
+      <h2 class="section-title">Become a Professional Agency Chatter</h2>
+      <p class="section-subtitle">OnlyFans agencies and content creator management companies need skilled chatters. We train you to fill that role with professionalism and consistency.</p>
+    </div>
+
+    <!-- Hero Image -->
+    <div style="border-radius:var(--radius); overflow:hidden; border:1px solid var(--black-border); margin-bottom:3.5rem; height:360px;">
+      <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=1200&q=80" alt="Person working on chat and messaging" style="width:100%; height:100%; object-fit:cover; filter:grayscale(20%);">
+    </div>
+
+    <div class="grid-2" style="margin-bottom:3.5rem;">
+      <div class="card">
+        <h3>What is an agency chatter?</h3>
+        <p>Agency chatters manage fan conversations on behalf of content creators. They handle subscriber engagement, build relationships, drive sales through natural dialogue, and maintain the creator's voice and persona across platforms like OnlyFans. It is a real, in-demand role that requires training, consistency, and absolute discretion.</p>
+      </div>
+      <div class="card">
+        <h3>Why train with DLVASolutions?</h3>
+        <p>Most chatters learn on the job and burn out or get dropped for poor performance. Our program gives you structured training before you ever touch a live account. You learn the skills, practice the scenarios, and get evaluated before placement. That is how you last in this industry and build a real income.</p>
+      </div>
+    </div>
+
+    <!-- What You'll Learn -->
+    <h3 style="font-size:1.3rem; font-weight:700; color:var(--white); margin-bottom:1.75rem;">What You Will Learn</h3>
+    <div class="grid-3" style="margin-bottom:3.5rem;">
+      <div class="card">
+        <div class="card-icon">&#128172;</div>
+        <h3>Fan Engagement & Conversation Flow</h3>
+        <p>How to open, maintain, and close conversations that keep subscribers engaged and coming back. Natural dialogue, not scripted responses.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#128176;</div>
+        <h3>Sales & Conversion Skills</h3>
+        <p>How to upsell PPV content, drive tips, and convert free followers into paying subscribers through genuine, persuasive conversation.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#127917;</div>
+        <h3>Persona & Tone Matching</h3>
+        <p>How to adopt and maintain a creator's voice consistently across every interaction. Subscribers should never notice the difference.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#129302;</div>
+        <h3>AI-Assisted Chat Workflows</h3>
+        <p>How to use AI tools to draft responses faster, manage multiple conversations, and maintain quality at scale without burning out.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#128274;</div>
+        <h3>Confidentiality & Boundaries</h3>
+        <p>Strict protocols for handling sensitive content, personal information, and creator privacy. Non-negotiable discretion at every level.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#128200;</div>
+        <h3>Performance & Metrics</h3>
+        <p>How agencies measure success: response time, revenue per subscriber, retention rates. You will be trained to hit real performance targets.</p>
+      </div>
+    </div>
+
+    <!-- Fit / Not Fit -->
+    <div class="fit-grid" style="margin-bottom:3.5rem;">
+      <div class="fit-box good">
+        <h4>You are a good fit if you:</h4>
+        <ul class="check-list">
+          <li>Are comfortable working in the adult content creator space</li>
+          <li>Can write naturally and adapt to different tones and personas</li>
+          <li>Understand that discretion and professionalism are non-negotiable</li>
+          <li>Want a structured path into a role that pays well and is in demand</li>
+          <li>Are willing to be trained and evaluated before placement</li>
+        </ul>
+      </div>
+      <div class="fit-box not">
+        <h4>This is not for you if you:</h4>
+        <ul class="x-list">
+          <li>Are not comfortable with the nature of the industry</li>
+          <li>Cannot maintain strict confidentiality</li>
+          <li>Want to freelance without accountability or standards</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Growth Pathway -->
+    <h3 style="font-size:1.3rem; font-weight:700; color:var(--white); margin-bottom:1.75rem;">Your Path to Placement</h3>
+    <div style="max-width:650px; margin-bottom:3rem;">
+      <div class="process-step">
+        <div class="step-num">01</div>
+        <div>
+          <h4>Apply & Get Accepted</h4>
+          <p>Submit your application. We review for communication skills, maturity, and willingness to operate within professional boundaries.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">02</div>
+        <div>
+          <h4>Train in Chat Management</h4>
+          <p>Learn fan engagement, sales techniques, persona consistency, AI-assisted workflows, and platform-specific best practices.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">03</div>
+        <div>
+          <h4>Practice with Real Scenarios</h4>
+          <p>Work through simulated chat situations that mirror actual agency accounts. Get feedback and improve before going live.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">04</div>
+        <div>
+          <h4>Get Evaluated & Placed</h4>
+          <p>Meet our performance and professionalism standards, and get matched with an agency that needs reliable, trained chatters.</p>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align:center;">
+      <a href="#" onclick="openModal(); return false;" class="btn btn-white">Apply for Chatter Training</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ FAQ ═══════ -->
+<section class="section section-bordered" id="faq">
+  <div class="container" style="max-width:800px;">
+    <div class="section-header section-header-center">
+      <div class="section-label">FAQ</div>
+      <h2 class="section-title">Frequently Asked Questions</h2>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        Do I need AI experience to apply?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer"><p>No. Our training program is built specifically for beginners with little to no prior experience in AI tools or virtual assistance. If you are willing to learn and committed to meeting professional standards, you are welcome to apply.</p></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        Are your VAs trained in AI tools?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer"><p>Yes. Every Virtual Assistant who completes our program has received hands-on training in AI platforms including Claude, ChatGPT, and supporting automation tools. They are trained to apply these tools professionally within real business workflows.</p></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        How does placement work?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer"><p>After completing training and passing our performance evaluations, qualified graduates enter our placement pipeline. We match them with online entrepreneurs and digital businesses based on skill alignment, business needs, and professional fit. Placement is earned through demonstrated competence, it is not automatic.</p></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        Is confidentiality guaranteed?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer"><p>Confidentiality is a core component of our training program. Every DLVASolutions-trained VA is instructed in proper handling of sensitive business information, data privacy practices, and professional discretion standards. We treat confidentiality as a non-negotiable standard.</p></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        Do you train chatters for OnlyFans agencies?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer"><p>Yes. We have a dedicated training track for agency chatters that covers fan engagement, sales conversion, persona management, AI-assisted chat workflows, and strict confidentiality standards. Graduates are matched with agencies that need trained, reliable chat operators.</p></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        What industries do you support?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer"><p>Our trained professionals are equipped to support a wide range of digital businesses, including content creators, OnlyFans agencies, online entrepreneurs, e-commerce operators, coaches, consultants, digital agencies, and service-based businesses that operate remotely.</p></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        What happens if a VA does not meet your standards?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer"><p>They are not placed. Our placement pipeline is reserved for individuals who meet defined performance and professionalism benchmarks. This protects the quality of service that businesses receive and maintains the credibility of every VA we endorse.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ BRAND STATEMENT ═══════ -->
+<section class="section section-bordered">
+  <div class="container" style="max-width:800px;">
+    <div class="statement-card">
+      <h3>Brand Positioning</h3>
+      <p>DLVASolutions is a professionally structured training and placement company for Virtual Assistants and agency chatters entering the digital workforce. Founded by Donn Leif, an AI Systems Builder and Automation Specialist with proven experience across AI workflows, communication systems, chat operations, and digital business infrastructure, DLVASolutions delivers practical, standards-driven training in AI tools, chat management, professional communication, and digital business support, followed by direct placement with agencies, online entrepreneurs, and digital businesses. We do not sell aspirations. We build professionals.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ APPLICATION MODAL ═══════ -->
+<div class="modal-overlay" id="applicationModal">
+  <div class="modal-content">
+    <button class="modal-close" id="modalClose" aria-label="Close">&times;</button>
+    <div class="modal-header">
+      <div class="section-label">Apply Now</div>
+      <h2 class="section-title">Start Your Application</h2>
+      <p>Fill out the form below to apply for our training program. All fields are required.</p>
+    </div>
+
+    <form id="applicationForm" autocomplete="on">
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="fullName">Full Name</label>
+          <input type="text" id="fullName" name="fullName" placeholder="Your full name" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" placeholder="you@email.com" required>
+        </div>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="phone">Phone / WhatsApp</label>
+          <input type="tel" id="phone" name="phone" placeholder="+63 or your country code" required>
+        </div>
+        <div class="form-group">
+          <label for="availability">Availability</label>
+          <select id="availability" name="availability" required>
+            <option value="" disabled selected>Select your availability</option>
+            <option value="Full-time">Full-time</option>
+            <option value="Part-time">Part-time</option>
+            <option value="Flexible">Flexible</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="weekends">Can you work weekends if required?</label>
+          <select id="weekends" name="weekends" required>
+            <option value="" disabled selected>Select</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="device">Device Type</label>
+          <select id="device" name="device" required>
+            <option value="" disabled selected>Select your device</option>
+            <option value="Laptop">Laptop</option>
+            <option value="Desktop">Desktop</option>
+            <option value="Laptop & Desktop">Laptop & Desktop</option>
+            <option value="Tablet">Tablet</option>
+            <option value="Phone Only">Phone Only</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="intro">Write a short professional introduction about yourself</label>
+        <textarea id="intro" name="intro" rows="4" placeholder="Tell us a bit about yourself, your background, and why you are interested in this program..." required></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="nda">Are you comfortable signing an NDA?</label>
+        <select id="nda" name="nda" required>
+          <option value="" disabled selected>Select</option>
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="resumeLink">Upload Resume / CV (paste a Google Drive or Dropbox link)</label>
+        <input type="url" id="resumeLink" name="resumeLink" placeholder="https://drive.google.com/... or https://dropbox.com/...">
+      </div>
+
+      <div class="form-group" style="margin-top:0.5rem;">
+        <label class="checkbox-label">
+          <input type="checkbox" id="agreement" name="agreement" required>
+          <span>I understand that submission does not guarantee acceptance and I agree to follow professional standards if selected.</span>
+        </label>
+      </div>
+
+      <div style="margin-top:2rem; text-align:center;">
+        <button type="submit" class="btn btn-white" id="submitBtn">Submit Application</button>
+      </div>
+
+      <div id="formMessage" style="text-align:center; margin-top:1.5rem; display:none;"></div>
+    </form>
+  </div>
+</div>
+
+<!-- ═══════ FOOTER ═══════ -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">DLVASOLUTIONS</div>
+      <div style="margin-top:0.35rem;">Learn. Get Skilled. Get Hired.</div>
+    </div>
+    <div class="footer-links">
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+
+      <a href="#vas">For VAs</a>
+      <a href="#chatters">For Chatters</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <div>&copy; 2026 DLVASolutions. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 20);
+  });
+  document.getElementById('menuToggle').addEventListener('click', () => {
+    document.getElementById('navLinks').classList.toggle('open');
+  });
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open'));
+  });
+  function toggleFaq(btn) {
+    const item = btn.parentElement;
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!wasOpen) item.classList.add('open');
+  }
+
+  // Modal open/close
+  const modal = document.getElementById('applicationModal');
+  function openModal() {
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    document.getElementById('navLinks').classList.remove('open');
+  }
+  function closeModal() {
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.getElementById('modalClose').addEventListener('click', closeModal);
+  modal.addEventListener('click', function(e) {
+    if (e.target === modal) closeModal();
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+  });
+
+  // Airtable form submission
+  const AIRTABLE_TOKEN = 'patqNbNsrn3JBFskZ.09cb574d6e9db045febaa1cd6ea09fbf0692284842cc417311f7624172edc848';
+  const AIRTABLE_BASE = 'appOhunvE7azgwPRA';
+  const AIRTABLE_TABLE = 'Table 1';
+
+  document.getElementById('applicationForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const btn = document.getElementById('submitBtn');
+    const msg = document.getElementById('formMessage');
+    const originalText = btn.textContent;
+
+    btn.disabled = true;
+    btn.textContent = 'Submitting...';
+    msg.style.display = 'none';
+
+    const fields = {
+      'Full Name': document.getElementById('fullName').value.trim(),
+      'Email Address': document.getElementById('email').value.trim(),
+      'Phone / WhatsApp': document.getElementById('phone').value.trim(),
+      'Availability': document.getElementById('availability').value,
+      'Can you work weekends if required? (Yes/No)': document.getElementById('weekends').value,
+      'Device Type': document.getElementById('device').value,
+      'Write a short professional introduction about yourself': document.getElementById('intro').value.trim(),
+      'Are you comfortable signing an NDA? (Yes/No)': document.getElementById('nda').value,
+      'Final Agreement': true
+    };
+
+    const resumeLink = document.getElementById('resumeLink').value.trim();
+    if (resumeLink) {
+      fields['Upload Resume / CV'] = resumeLink;
+    }
+
+    try {
+      const res = await fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE}/${encodeURIComponent(AIRTABLE_TABLE)}`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${AIRTABLE_TOKEN}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ typecast: true, records: [{ fields }] })
+      });
+
+      const data = await res.json();
+
+      if (data.records) {
+        msg.className = 'form-success';
+        msg.textContent = 'Application submitted successfully. We will be in touch.';
+        msg.style.display = 'block';
+        document.getElementById('applicationForm').reset();
+      } else {
+        throw new Error(data.error?.message || 'Submission failed');
+      }
+    } catch (err) {
+      msg.className = 'form-error';
+      msg.textContent = 'Something went wrong. Please try again or contact us directly.';
+      msg.style.display = 'block';
+      console.error('Airtable error:', err);
+    }
+
+    btn.disabled = false;
+    btn.textContent = originalText;
+  });
+</script>
+
+</body>
+</html>
