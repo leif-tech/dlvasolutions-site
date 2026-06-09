@@ -89,7 +89,8 @@
       margin-right: 0.5rem;
       border-right: 1px solid #ddd;
     }
-    .nav-logo img { height: 28px; width: 28px; object-fit: contain; border-radius: 6px; }
+    .nav-logo img { height: 28px; width: 28px; object-fit: contain; border-radius: 6px; filter: invert(1); transition: filter 0.3s ease; }
+    .nav-dark .nav-logo img { filter: invert(0); }
     .nav-left-links { display: flex; gap: 0; align-items: center; }
     .nav-left-links a {
       color: #444; text-decoration: none; font-size: 0.85rem; font-weight: 500;
